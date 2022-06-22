@@ -1,7 +1,22 @@
-# ajax-hook
+# ajax-hook 的ts版本
 
 [![npm version](https://img.shields.io/npm/v/ajax-hook.svg)](https://www.npmjs.org/package/ajax-hook) [![build status](https://travis-ci.org/wendux/Ajax-hook.svg?branch=master)](https://travis-ci.org/wendux/Ajax-hook) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/mit-license.php) ![](https://img.shields.io/badge/TypeScript-support-orange.svg)   [![](https://img.shields.io/github/size/wendux/Ajax-hook/dist/ajaxhook.core.min.js.svg)](https://unpkg.com/ajax-hook@2.0.0/dist/ajaxhook.core.min.js)
 
+需要先安装，@bfchain/pkgm ,pkgm能让您直接上手开发ts而不必管配置文件。
+
+1. 全局安装 `@bfchain/pkgm`
+
+```shell
+npm i -g @bfchain/pkgm
+# or
+yarn global add @bfchain/pkgm
+```
+
+安装完只需要运行,详细教程查看：[pkgm](https://github.com/BioforestChain/pkgm)
+
+```shell
+bfsp dev
+```
 
 ## 简介
 
@@ -143,8 +158,6 @@ testJquery(location.href)
 ```
 
 运行后，控制台输出3次 "hi world"。
-
-
 
 ## 核心API - `hook(hooks,[window])`
 
@@ -288,8 +301,6 @@ hook({
     });
     ```
 
-
-
   - 拦截`responseText` 和 `response`读操作
 
     ```javascript
@@ -318,19 +329,16 @@ hook({
 
 如果你只想使用`hook(...)`方法（不需要使用`proxy()`），我们提供了只包含`hook()`方法的核心库，你可以在[dist目录](https://github.com/wendux/Ajax-hook/tree/master/dist)找到名为`ajax-hook.core.js`的文件，直接使用它即可。
 
-
-
 ## `proxy(...)` vs `hook(...)`
 
 `proxy()` 和`hook()`都可以用于拦截全局`XMLHttpRequest`。它们的区别是：`hook()`的拦截粒度细，可以具体到`XMLHttpRequest`对象的某一方法、属性、回调，但是使用起来比较麻烦，很多时候，不仅业务逻辑需要散落在各个回调当中，而且还容易出错。而`proxy()`抽象度高，并且构建了请求上下文（请求信息config在各个回调中都可以直接获取），使用起来更简单、高效。
 
 大多数情况下，我们建议使用`proxy()` 方法，除非`proxy()` 方法不能满足你的需求。
 
-
-
 ## 拦截iframe
 
 显示指定iframe 的 window 对象即可，比如：
+
 ```javascript
 var iframeWindow = ...;
 proxy({...},iframeWindow)
@@ -339,11 +347,13 @@ unProxy(iframeWindow)
 hook({...},iframeWindow)
 unHook(frameWindow)      
 ```
+
 完整示例见：[拦截iframe中的请求](https://github.com/wendux/ajax-hook/tree/master/examples/iframe)。
 
 > 注意：只能拦截**同源**的iframe页面（不能跨域）。
 
 ## 原理解析
+
 通过ES5 getter和setter特性实现对 XMLHttpRequest 对象的代理：
 ![image](https://github.com/wendux/Ajax-hook/raw/master/ajaxhook.png)
 
@@ -354,4 +364,3 @@ unHook(frameWindow)
 本库在2016年首次开源，最初只是个人研究所用，源码50行左右，实现了一个Ajax拦截的核心，并非一个完整可商用的项目。自开源后，有好多人对这个黑科技比较感兴趣，于是我便写了篇介绍的博客，由于代码比较精炼，所以对于JavaScript不是很精通的同学可能看起来比较吃力，之后专门写了一篇原理解析的文章，现在已经有很多公司已经将 ajax-hook 用于线上项目中，直到我知道美团、滴滴也用到之后，笔者对此库进行了修改和扩展以增强其健壮性和实用性，现在已经达到商用的标准，本库也将进行技术支持。如果你喜欢，欢迎Star，如果有问题，欢迎提Issue， 如果你觉得对自己有用想请作者喝杯咖啡的话，请扫描下面二维码：
 
 <img  width=300 src="https://doc.flutterchina.club/images/pay29.jpeg" />
-
